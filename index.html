@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CyberShield X</title>
+  <link rel="icon" type="image/png" href="logo2.png" />
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- Premium Gradient Background -->
+  <div class="gradient-bg"></div>
+
+  <!-- Floating Background Particles -->
+  <canvas id="particles"></canvas>
+
+  <!-- Sticky Header -->
+  <header class="header">
+    <div class="logo">
+      <img src="logo2.png" alt="CyberShield X" class="logo-img" />
+      <span class="logo-name">CyberShield X</span>
+    </div>
+    <div class="header-status">
+      <div class="status-pill">
+        <div class="status-dot"></div>
+        Online
+      </div>
+    </div>
+  </header>
+
+  <!-- Hidden API Key (logic runs in background) -->
+  <div style="display:none;">
+    <input id="apiKeyInput" type="hidden" value="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" />
+    <span id="apiSaved"></span>
+  </div>
+
+  <!-- Hero / Intro Section -->
+  <section class="hero" id="hero">
+    <div class="hero-image-wrap">
+      <img src="laptop.jpeg" alt="Cybersecurity" class="hero-image" />
+      <div class="hero-image-overlay"></div>
+    </div>
+    <div class="hero-content">
+      <h1 class="hero-title">PROTECT YOUR DIGITAL WORLD</h1>
+      <p class="typewriter" id="typewriter"></p>
+      <a href="#scanner" class="hero-cta">Get Started</a>
+    </div>
+  </section>
+
+  <!-- Scanner Section -->
+  <section class="scanner-section" id="scanner">
+    <main class="main">
+
+      <div class="tabs">
+        <button class="tab active" data-tab="url">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Website
+        </button>
+        <button class="tab" data-tab="sms">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          SMS
+        </button>
+        <button class="tab" data-tab="ai">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><circle cx="9" cy="10" r="1.5" fill="currentColor" stroke="none"/><circle cx="15" cy="10" r="1.5" fill="currentColor" stroke="none"/><path d="M8 18h8"/><path d="M10 18v2"/><path d="M14 18v2"/></svg>
+          AI Assistant
+        </button>
+        <button class="tab" data-tab="email">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email
+        </button>
+        <button class="tab" data-tab="survey">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Survey
+        </button>
+      </div>
+
+      <!-- URL TAB -->
+      <div class="tab-content active" id="tab-url">
+        <div class="panel">
+          <h2 class="panel-title">Website Scanner</h2>
+          <p class="panel-sub">Real-time URL threat analysis</p>
+          <div class="samples" id="url-samples"></div>
+          <div class="input-row">
+            <input class="cyber-input" id="url-input" placeholder="https://example.com" />
+            <button class="scan-btn" id="url-btn" onclick="runScan('url')">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              Scan
+            </button>
+          </div>
+          <div class="scanning-state" id="url-scanning">
+            <div class="scanning-label">Inspecting URL...</div>
+          </div>
+          <div class="error-box" id="url-error"></div>
+          <div class="result-card" id="url-result"></div>
+        </div>
+      </div>
+
+      <!-- SMS TAB -->
+      <div class="tab-content" id="tab-sms">
+        <div class="panel">
+          <h2 class="panel-title">Message Inspector</h2>
+          <p class="panel-sub">Natural language threat analysis</p>
+          <div class="samples" id="sms-samples"></div>
+          <textarea class="cyber-textarea" id="sms-input" placeholder="Paste SMS message here..."></textarea>
+          <button class="scan-btn scan-btn-full" id="sms-btn" onclick="runScan('sms')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Analyze Message
+          </button>
+          <div class="scanning-state" id="sms-scanning">
+            <div class="scanning-label">Scanning intent...</div>
+          </div>
+          <div class="error-box" id="sms-error"></div>
+          <div class="result-card" id="sms-result"></div>
+        </div>
+      </div>
+
+      <!-- AI ASSISTANT TAB -->
+      <div class="tab-content" id="tab-ai">
+        <div class="panel ai-panel">
+          <div class="ai-robot-icon">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="12" rx="2"/>
+              <circle cx="9" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+              <circle cx="15" cy="10" r="1.5" fill="currentColor" stroke="none"/>
+              <path d="M8 18h8"/>
+              <path d="M10 18v2"/>
+              <path d="M14 18v2"/>
+              <line x1="12" y1="1" x2="12" y2="4"/>
+              <circle cx="12" cy="1" r="0.5" fill="currentColor" stroke="none"/>
+            </svg>
+          </div>
+          <h2 class="panel-title" style="text-align:center;">AI Assistant</h2>
+          <p class="ai-desc">🔷 Your own cybersecurity risk assessment — powered by AI. Get instant threat analysis, security recommendations, and personalized protection guidance.</p>
+          <a href="https://chatgpt.com/g/g-69ddd67f0ad481919ccf3d828a054f74-xyber" target="_blank" class="ai-access-btn">Access your own AI Assistant</a>
+        </div>
+      </div>
+
+      <!-- EMAIL TAB -->
+      <div class="tab-content" id="tab-email">
+        <div class="panel">
+          <h2 class="panel-title">Mail Scanner</h2>
+          <p class="panel-sub">Phishing and spoofing detection</p>
+          <div class="samples" id="email-samples"></div>
+          <textarea class="cyber-textarea" id="email-input" placeholder="Paste email content (From, Subject, Body)..."></textarea>
+          <button class="scan-btn scan-btn-full" id="email-btn" onclick="runScan('email')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Scan Email
+          </button>
+          <div class="scanning-state" id="email-scanning">
+            <div class="scanning-label">Running diagnostics...</div>
+          </div>
+          <div class="error-box" id="email-error"></div>
+          <div class="result-card" id="email-result"></div>
+        </div>
+      </div>
+
+      <!-- SURVEY TAB -->
+      <div class="tab-content" id="tab-survey">
+        <div class="panel survey-panel">
+          <div id="survey-container">
+            <!-- Survey intro -->
+            <div id="survey-intro">
+              <div class="survey-header-icon">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              </div>
+              <h2 class="panel-title" style="text-align:center">Cyber Security Survey</h2>
+              <p class="survey-intro-text">Assess your digital safety habits with 15 real-world questions. Get a personalized risk score and actionable recommendations.</p>
+              <button class="scan-btn scan-btn-full" onclick="startSurvey()" id="survey-start-btn">Start Assessment</button>
+            </div>
+            <!-- Question view -->
+            <div id="survey-question" style="display:none">
+              <div class="survey-progress">
+                <div class="survey-progress-bar"><div class="survey-progress-fill" id="survey-progress-fill"></div></div>
+                <span class="survey-progress-text" id="survey-progress-text">1 / 15</span>
+              </div>
+              <h3 class="survey-q" id="survey-q-text"></h3>
+              <div class="survey-options" id="survey-options"></div>
+            </div>
+            <!-- Result view -->
+            <div id="survey-result" style="display:none"></div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </section>
+
+  <!-- Cybersecurity Info Section -->
+  <section class="info-section">
+    <h2 class="info-title">Cybersecurity Essentials</h2>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        </div>
+        <h3>Phishing Links</h3>
+        <p>Always verify the sender's address and hover over links to check the actual destination before clicking.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>Unsecured Networks</h3>
+        <p>Avoid accessing sensitive information over public Wi-Fi. Ensure sites you visit always use HTTPS.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <h3>Social Engineering</h3>
+        <p>Urgency is a red flag. Scammers create fake emergencies to rush you into poor decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">CyberShield X · Unified Threat Intelligence</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="script.js"></script>
+  <script src="survey.js"></script>
+</body>
+</html>
